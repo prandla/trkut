@@ -119,33 +119,6 @@
 
 \RequirePackage{microtype}% Teeb paigutuse paremaks
 
-% Overleaf'ist tingitud microtype warningu eemaldamine, see peaks olema eemaldatud microtype ver 2.7
-% https://tex.stackexchange.com/questions/373594/microtype-producing-dozens-of-unknown-slot-number-warnings
-% XXX: check if this hack is still needed
-\def\MT@is@composite#1#2\relax{%
-  \ifx\\#2\\\else
-    \expandafter\def\expandafter\MT@char\expandafter{\csname\expandafter
-                    \string\csname\MT@encoding\endcsname
-                    \MT@detokenize@n{#1}-\MT@detokenize@n{#2}\endcsname}%
-    % 3 lines added:
-    \ifx\UnicodeEncodingName\@undefined\else
-      \expandafter\expandafter\expandafter\MT@is@uni@comp\MT@char\iffontchar\else\fi\relax
-    \fi
-    \expandafter\expandafter\expandafter\MT@is@letter\MT@char\relax\relax
-    \ifnum\MT@char@ < \z@
-      \ifMT@xunicode
-        \edef\MT@char{\MT@exp@two@c\MT@strip@prefix\meaning\MT@char>\relax}%
-          \expandafter\MT@exp@two@c\expandafter\MT@is@charx\expandafter
-            \MT@char\MT@charxstring\relax\relax\relax\relax\relax
-      \fi
-    \fi
-  \fi
-}
-% new:
-\def\MT@is@uni@comp#1\iffontchar#2\else#3\fi\relax{%
-  \ifx\\#2\\\else\edef\MT@char{\iffontchar#2\fi}\fi
-}
-
 % Kas lisadel on ülemine ääris 2,5 cm või 5 cm?
 % ^ juhendis pole öeldud, aga kõik juhendi lisad on 2.5cm
 

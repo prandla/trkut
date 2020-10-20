@@ -10,7 +10,7 @@ biber 135d_EesnimiPerenimi
 lualatex 135d_EesnimiPerenimi.tex
 ```
 
-Mujal soovitan lihtsalt Overleaf'i kasutada. Seal tuleb ainult settingutes pdfLaTeX'i asemel LuaLaTeX valida.
+Mujal soovitan lihtsalt Overleaf'i kasutada. Seal tuleb ainult settingutes pdfLaTeX'i asemel LuaLaTeX valida, ja TeX Live versioon võiks panna vähemalt 2020.
 
 Asjad, mida UT'd kirjutades tähele panna:
 
