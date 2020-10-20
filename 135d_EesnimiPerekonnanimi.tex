@@ -15,9 +15,9 @@
 \usepackage{listings}
 
 \pealkiri{Gümnaasiumi uurimistöö koostamine kasutades \LaTeX \ dokumentide ettevalmistussüsteemi}
-\autor{Kaarel Kivisalu}
-\klass{11. a}
-\juhendaja{Kaarel Kivisalu}% Juhendajad eraldada \\ sümboliga
+\autor{Eesnimi Perekonnanimi}
+\klass{135. d}
+\juhendaja{Eesnimi Perekonnanimi}% Juhendajad eraldada \\ sümboliga
 %\toggletrue{mitujuhendajat}% Uncomment kui on mitu juhendajat (muudab sõna juhendaja(d) ja kinnituslehte)
 
 \begin{document}
@@ -52,10 +52,10 @@ Osad märgid on reserveeritud vormindamise jaoks. Nende kirjutamiseks on vaja en
 Jooniseid saab lisada kasutades \verb!figure! keskkonda. Joonis \ref{joonis1} on lisatud kasutades järgnevaid käske:
 \begin{verbatim}
 \begin{figure}[htb]% [] sisse märgitakse paigutus !htbp
-	\includegraphics[5cm]{joonis1.pdf}% Joonise suurus, joonise fail
-	\caption{Probleemi ülesehitus}% Allkiri
-	\allikas{Autori andmed}% Allikas
-	\label{joonis1}% Selle järgi viidatakse, pärast käsku \caption
+    \includegraphics[5cm]{joonis1.pdf}% Joonise suurus, joonise fail
+    \caption{Probleemi ülesehitus}% Allkiri
+    \allikas{Autori andmed}% Allikas
+    \label{joonis1}% Selle järgi viidatakse, pärast käsku \caption
 \end{figure}
 \end{verbatim}
 \begin{figure}[htb]% [] sisse märgitakse paigutus !htbp
@@ -69,19 +69,20 @@ Jooniseid saab lisada kasutades \verb!figure! keskkonda. Joonis \ref{joonis1} on
 Tabeleid saab koostada kasutades \verb!table! ja \verb!tabular!. Kuna pikkade tabelite vormistamine \LaTeX'is on tülikas, siis on võimalik ka lisada tabel \verb!csv! failist. Tabel \ref{tabel1} on lisatud kasutades järgnevaid käske:
 \begin{verbatim}
 \begin{table}[htb]
-	\caption{Eksperimentaalsed andmed}% Pealkiri
-	\label{tabel1}% Tabelile viitamine
-	\begin{tabular}{r|r|r}% r - paremjoondatud tulp, | - püstjoon
-		\hline% Horisontaalne joon
-		Tulp 1 & Tulp 2 & Tulp 3 \\% Märgiga & eraldatakse tulbad
-		\hline
-		... & ... & ... \\
-		... & ... & ... \\
-		... & ... & ... \\
-		... & ... & ...
-	\end{tabular}
-	\allikas{Autori andmed}}% Viide
-\end{table}     
+    \caption{Eksperimentaalsed andmed}% Pealkiri
+    \label{tabel1}% Tabelile viitamine
+    \begin{tabular}{r|r|r}% r - paremjoondatud tulp, | - püstjoon
+        \hline% Horisontaalne joon
+        Tulp 1 & Tulp 2 & Tulp 3 \\% Märgiga & eraldatakse tulbad
+        \hline
+        ... & ... & ... \\
+        ... & ... & ... \\
+        ... & ... & ... \\
+        ... & ... & ... \\
+        \hline
+    \end{tabular}
+    \allikas{Autori andmed}}% Viide
+\end{table}
 \end{verbatim}
 
 \begin{table}[htb]
@@ -94,7 +95,8 @@ Tabeleid saab koostada kasutades \verb!table! ja \verb!tabular!. Kuna pikkade ta
 		... & ... & ... \\
 		... & ... & ... \\
 		... & ... & ... \\
-		... & ... & ...
+		... & ... & ... \\
+		\hline
 	\end{tabular}
 	\allikas{Autori andmed}% Viide
 \end{table} 
@@ -106,8 +108,8 @@ Eraldi real olevate tabelite vormistamiseks on kaks võimalust. Ilma nummerdamat
 \[\int_{-\infty}^{+\infty} e^{-x^2} dx = \left( 6 \sum_{n=1}^{\infty} \frac{1}{n^2} \right)^\frac{1}{4}\]
 saamiseks on kasutatud käsku 
 \begin{verbatim}
-    \[\int_{-\infty}^{+\infty} e^{-x^2} dx =
-    \left( 6 \sum_{n=1}^{\infty} \frac{1}{n^2} \right)^\frac{1}{4}\]
+\[\int_{-\infty}^{+\infty} e^{-x^2} dx =
+\left( 6 \sum_{n=1}^{\infty} \frac{1}{n^2} \right)^\frac{1}{4}\]
 \end{verbatim}
 
 Nummerdusega valemite saamiseks on vaja kasutada keskkonda \verb!equation!. Valemi \ref{eq1} on lisatud kasutades järgnevaid käske: 
@@ -172,7 +174,7 @@ Lisasid saab koostada peale käsku \verb!\appendix!. Lisade pealkirjade nummerdu
 \section{Pakid}
 Alusfail toetab mitmeid autorile kasulikke pakke. Nende loetelu ja kirjelus on toodud allpool. Kui soovitud pakki pole loetelus, siis saab selle lisada käsuga \verb!\usepackage{}!.
 \subsection{\textsf{csquotes}}
-Selle pakiga saab kasutada eesti jutumärke käsuga \verb!\enquote{}!.
+Selle pakiga saab kasutada \enquote{eesti jutumärke} käsuga \verb!\enquote{}!.
 \subsection{\textsf{graphicx}}
 Selle pakiga saab lisada jooniseid. Vaata peatükki \ref{sec:1} lisainfo jaoks.
 \subsection{\textsf{amsmath} ja \textsf{amssymb}}

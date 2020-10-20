@@ -1,6 +1,9 @@
 %%% Originally written by Sandra Schumann in 2012
 %%% Modified by Kaarel Kivisalu in 2018
 %%% kaarel.kivisalu@real.edu.ee (kaarel.kivisalu@gmail.com pärast 06.2020)
+%%% Modified by Peeter Aleksander Randla in 2020
+
+% XXX: PDF TOC contains garbage for appendices and doesn't have any numbers
 
 % Mitu juhendajat
 % Automaatne nummerdamine ilma käsuta
@@ -11,7 +14,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{trkut}[2018-12-02 TRK UT class]
 
-\LoadClass[oneside, 12pt, headings=small, numbers=noendperiod]{scrreprt}% Numbrite vahel ja lõpus on punkt, chapter font large, 12pt.
+\LoadClass[oneside, 12pt, headings=small, numbers=endperiod]{scrreprt}% Numbrite vahel ja lõpus on punkt, chapter font large, 12pt.
 
 \RequirePackage{etoolbox}% Scriptimismacrod
 \RequirePackage{polyglossia}% Eesti keele tugi
@@ -96,7 +99,7 @@
 \RequirePackage[section]{placeins}
 
 % Captions to "Caption" style instead of "Source".
-\newcommand{\trkcaptionsetup}{\captionsetup{labelformat=simple, labelsep=period, labelfont=bf, font=bf}}
+\newcommand{\trkcaptionsetup}{\captionsetup{labelformat=simple, labelsep=period, labelfont=normalfont, font=normalfont}}
 \trkcaptionsetup % And this is also the default
 % Captions to "Source" mode. Only used internally by \allikas
 \newcommand{\captionstosource}{\captionsetup{labelformat=simple, labelsep=period, font=normalfont}}
@@ -118,6 +121,7 @@
 
 % Overleaf'ist tingitud microtype warningu eemaldamine, see peaks olema eemaldatud microtype ver 2.7
 % https://tex.stackexchange.com/questions/373594/microtype-producing-dozens-of-unknown-slot-number-warnings
+% XXX: check if this hack is still needed
 \def\MT@is@composite#1#2\relax{%
   \ifx\\#2\\\else
     \expandafter\def\expandafter\MT@char\expandafter{\csname\expandafter
@@ -143,6 +147,8 @@
 }
 
 % Kas lisadel on ülemine ääris 2,5 cm või 5 cm?
+% ^ juhendis pole öeldud, aga kõik juhendi lisad on 2.5cm
+
 % Lisade pealkirjad stiilis "Lisa 2 Teise lisa pealkiri"
 % Vaata https://tex.stackexchange.com/questions/163890
 \let\oldaddchap\addchap
@@ -151,13 +157,24 @@
 		{\arabic{chapter}}
 	}
 	\renewcommand*{\chapterformat}{%
-		{\chapapp\nobreakspace\thechapter\autodot\enskip}%
+		{\chapapp\nobreakspace\thechapter\enskip}%
 	}
 	\renewcommand*{\chaptermarkformat}{%
-		{\chapapp\nobreakspace\thechapter\autodot\enskip}%
+		{\chapapp\nobreakspace\thechapter\enskip}%
 	}
 	\let\oldaddcontentsline\addcontentsline
-	\newcommand\hackedaddcontentsline[3]{\oldaddcontentsline{#1}{#2}{\chapapp\nobreakspace#3}}
+    % \addcontentsline is used by \chapter to write a line to the tocfile.
+    % we override it to first write "appendix", then set \autodot to an
+    % empty string to not add a dot after the appendix number, then reset
+    % \autodot to its original value (which generally depends on which
+    % options you pass to scrreprt but we can hardcode it here as we include
+    % scrreprt in the same file)
+    \newcommand\hackedaddcontentsline[3]{\oldaddcontentsline{#1}{#2}{%
+        \chapapp\nobreakspace%
+        \string\def\string\autodot{}%
+        #3%
+        \string\def\string\autodot{.}%
+        }}
 	\let\oldchapter\chapter
 	\renewcommand*\chapter[1]{%
 		\let\addcontentsline\hackedaddcontentsline%
@@ -181,16 +198,17 @@
 
 \renewcommand{\baselinestretch}{1.5}%   Reavahe on 1,5
 \setlength{\parindent}{0pt}%            Taandridasid pole
-\setlength{\parskip}{1em}%              Lõiguvahe on 1 em
+\setlength{\parskip}{12pt}%             Lõiguvahe on 12 pt
 \setlength{\topskip}{0pt}%              Ülaääre ja teksti vahel pole vaba ruumi
 
 % Pealkirjade vahed 
 \RedeclareSectionCommand[%
-beforeskip=2.5 cm]{chapter}
+beforeskip=2.5cm,
+tocbeforeskip=0pt]{chapter}% XXX: kas see on õige fondisuurusega?? peaks 16pt olema
 \renewcommand*{\chapterheadendvskip}{\vspace{0em}}
 \RedeclareSectionCommand[
 beforeskip=1pt,
-afterskip=1sp,
+afterskip=1sp,% peab olema positiivne, et KOMA ei muudaks seda run-in heading'uks
 tocindent=2em]{section}
 \RedeclareSectionCommand[
 beforeskip=1pt,
@@ -207,7 +225,7 @@ tocindent=8em]{paragraph}
 \RedeclareSectionCommand[
 beforeskip=1pt,
 afterskip=1sp,
-indent=0pt,% Miks on see siin, aga mitte teistel pealkirjadel
+indent=0pt,% XXX: Miks on see siin, aga mitte teistel pealkirjadel?
 tocindent=10em]{subparagraph}
 
 % Pealkirjad boldis ja tekstiga sama fondiga
