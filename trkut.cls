@@ -20,13 +20,6 @@
 \RequirePackage{polyglossia}% Eesti keele tugi
 \setdefaultlanguage{estonian}
 \RequirePackage{csquotes}% Eesti jutumärgid käsuga \enquote{}
-% Need peaksid olema eesti keele jaoks olemas, overleaf ei tunnista millegipärast
-\DeclareQuoteStyle{estonian}%
-  {\quotedblbase}
-  {\textquotedblleft}
-  [0.05em]
-  {\quotedblbase}
-  {\textquotedblleft}
 \RequirePackage{graphicx}% Joonised
 \RequirePackage[colorlinks,citecolor=black,filecolor=black,linkcolor=black,urlcolor=black]{hyperref}% Sisukorras ja viidetel on lingid
 \RequirePackage{amsmath}
