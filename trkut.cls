@@ -117,7 +117,7 @@
 \let\oldaddchap\addchap
 \g@addto@macro\appendix{%
     \renewcommand*{\thechapter}{%
-        {\arabic{chapter}}
+        {\arabic{chapter}}%
     }
     \renewcommand*{\chapterformat}{%
         {\chapapp\nobreakspace\thechapter\enskip}%

@@ -1,6 +1,7 @@
 % See fail on kasutatud materjalide jaoks
 \ProvidesFile{trkut.bbx}
 
+% XXX: check if sorting is correct (needs to be author, in case of no author first word of title)
 \ExecuteBibliographyOptions{language=estonian, sortlocale=en, dateabbrev=false,maxbibnames=99,giveninits=true, sorting=nyt}
 
 \newbibmacro*{begentry}{}
@@ -24,8 +25,8 @@ references = {Kasutatud materjalid},
 % Perekonnanimi, eesnimi
 \DeclareNameAlias{author}{family-given}
 
-% Kasutatud materjali kõpus pole punkti
-\renewcommand*\finentrypunct{}
+% Kasutatud materjali lõpus pole punkti
+% \renewcommand*\finentrypunct{}
 
 
 
@@ -64,6 +65,20 @@ references = {Kasutatud materjalid},
 }
 
 \DeclareBibliographyDriver{online}{%
+  \usebibmacro{begentry}%
+  \usebibmacro{author+year+title}
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}
+}
+
+\DeclareBibliographyDriver{unpublished}{%
+  \usebibmacro{begentry}%
+  \usebibmacro{author+year+title}
+  \usebibmacro{url+urldate}%
+  \usebibmacro{finentry}
+}
+
+\DeclareBibliographyDriver{misc}{%
   \usebibmacro{begentry}%
   \usebibmacro{author+year+title}
   \usebibmacro{url+urldate}%
