@@ -8,7 +8,7 @@
 % Mitu juhendajat
 % Automaatne nummerdamine ilma käsuta
 %------------------------------------------------------------------------
-%	CLASS DEFINITION AND PARAMETERS
+%   CLASS DEFINITION AND PARAMETERS
 %------------------------------------------------------------------------
 
 \NeedsTeXFormat{LaTeX2e}
@@ -26,21 +26,21 @@
 \RequirePackage{siunitx}
 
 %---------------------------------------------
-%	ÄÄRISED
+%   ÄÄRISED
 %---------------------------------------------
 
 \RequirePackage[layout=a4paper, top=2.5cm, bottom=2.5cm, left=3cm, right=2cm, includeall=false]{geometry}
 \geometry{%
-	layout=a4paper,
-	top=2.5cm,
-	bottom=2.5cm,
-	left=3cm,
-	right=2cm,
-	includeall=false
+    layout=a4paper,
+    top=2.5cm,
+    bottom=2.5cm,
+    left=3cm,
+    right=2cm,
+    includeall=false
 }
 
 %----------------------------------------------------------------------------------------
-%	PENALTIES
+%   PENALTIES
 %----------------------------------------------------------------------------------------
 
 \doublehyphendemerits=10000%    No consecutive line hyphens
@@ -50,7 +50,7 @@
 \interfootnotelinepenalty=9999% Almost never break footnotes
 
 %---------------------------------------------
-%	NUMMERDAMINE
+%   NUMMERDAMINE
 %---------------------------------------------
 
 %% Leheküljenumbrid algavad sisukorra teiselt leheküljelt
@@ -60,15 +60,15 @@
 
 % Käsk nummerdamise alustamiseks
 \newcommand{\nummerdame}{%
-	\iftoggle{nummerdamelehti}{}{%
-		\renewcommand\thepage{\arabic{page}}%
-		\toggletrue{nummerdamelehti}%
-		\thispagestyle{empty}%
-	}
+    \iftoggle{nummerdamelehti}{}{%
+        \renewcommand\thepage{\arabic{page}}%
+        \toggletrue{nummerdamelehti}%
+        \thispagestyle{empty}%
+    }
 }
 
 %---------------------------------------------
-%	SISUKORD
+%   SISUKORD
 %---------------------------------------------
 
 \KOMAoptions{toc=chapterentrydotfill}%      Peatükkide taga on punktiirjoon
@@ -78,7 +78,7 @@
 \setcounter{secnumdepth}{99}%               Numbreid ka neile
 
 %---------------------------------------------
-%	TABELID, JOONISED, VÕRRANDID
+%   TABELID, JOONISED, VÕRRANDID
 %---------------------------------------------
 
 \RequirePackage{enumitem}
@@ -107,7 +107,7 @@
 \counterwithout{footnote}{chapter}
 
 %---------------------------------------------
-%	PAIGUTUS JA FORMAAT
+%   PAIGUTUS JA FORMAAT
 %---------------------------------------------
 
 \RequirePackage{microtype}% Teeb paigutuse paremaks
@@ -119,16 +119,16 @@
 % Vaata https://tex.stackexchange.com/questions/163890
 \let\oldaddchap\addchap
 \g@addto@macro\appendix{%
-	\renewcommand*{\thechapter}{%
-		{\arabic{chapter}}
-	}
-	\renewcommand*{\chapterformat}{%
-		{\chapapp\nobreakspace\thechapter\enskip}%
-	}
-	\renewcommand*{\chaptermarkformat}{%
-		{\chapapp\nobreakspace\thechapter\enskip}%
-	}
-	\let\oldaddcontentsline\addcontentsline
+    \renewcommand*{\thechapter}{%
+        {\arabic{chapter}}
+    }
+    \renewcommand*{\chapterformat}{%
+        {\chapapp\nobreakspace\thechapter\enskip}%
+    }
+    \renewcommand*{\chaptermarkformat}{%
+        {\chapapp\nobreakspace\thechapter\enskip}%
+    }
+    \let\oldaddcontentsline\addcontentsline
     % \addcontentsline is used by \chapter to write a line to the tocfile.
     % we override it to first write "appendix", then set \autodot to an
     % empty string to not add a dot after the appendix number, then reset
@@ -141,26 +141,26 @@
         #3%
         \string\def\string\autodot{.}%
         }}
-	\let\oldchapter\chapter
-	\renewcommand*\chapter[1]{%
-		\let\addcontentsline\hackedaddcontentsline%
-		\oldchapter{#1}%
-		\let\addcontentsline\oldaddcontentsline%
-	}
-	\renewcommand*{\chapterheadstartvskip}{\vspace{0pt}}
+    \let\oldchapter\chapter
+    \renewcommand*\chapter[1]{%
+        \let\addcontentsline\hackedaddcontentsline%
+        \oldchapter{#1}%
+        \let\addcontentsline\oldaddcontentsline%
+    }
+    \renewcommand*{\chapterheadstartvskip}{\vspace{0pt}}
 }
 
 % Font size
-% \tiny			6pt
-% \scriptsize	8pt
-% \footnotesize	10pt
-% \small		11pt
-% \normalsize	12pt
-% \large		14pt
-% \Large		17pt
-% \LARGE		20pt
-% \huge			25pt
-% \Huge			25pt
+% \tiny         6pt
+% \scriptsize   8pt
+% \footnotesize 10pt
+% \small        11pt
+% \normalsize   12pt
+% \large        14pt
+% \Large        17pt
+% \LARGE        20pt
+% \huge         25pt
+% \Huge         25pt
 
 % faili alguses scrreprt'i option headings=small annab:
 % \chapter kasutab \Large (17pt)
@@ -174,7 +174,7 @@
 \setlength{\parskip}{12pt}%             Lõiguvahe on 12 pt
 \setlength{\topskip}{0pt}%              Ülaääre ja teksti vahel pole vaba ruumi
 
-% Pealkirjade vahed 
+% Pealkirjade vahed
 \RedeclareSectionCommand[%
 beforeskip=2.5cm,
 tocbeforeskip=0pt]{chapter}
@@ -210,7 +210,7 @@ tocindent=10em]{subparagraph}
 \setkomafont{disposition}{\rmfamily\bfseries}
 
 %---------------------------------------------
-%	TIITELLEHT
+%   TIITELLEHT
 %---------------------------------------------
 \newtoggle{mitujuhendajat}
 \togglefalse{mitujuhendajat}
@@ -231,82 +231,82 @@ tocindent=10em]{subparagraph}
 
 % Tiitellehe genereerimine
 \renewcommand{\maketitle}{%
-	\newpage
-	\thispagestyle{empty}
-	\large	
-	\begin{center}
+    \newpage
+    \thispagestyle{empty}
+    \large
+    \begin{center}
         \@asutus
-	\end{center}
-	\vspace{8cm}
-	\begin{center}
-		{\LARGE\textbf{\@title}}
-		
-		\@paber
-	\end{center}
-	\vspace{2cm}
-	\begin{flushright}
-	\@author \\
-	\@klass \\
-	\iftoggle{mitujuhendajat}{%
-		Juhendajad: \@juhendaja
-	}{%
-		Juhendaja: \@juhendaja
-	}
-	\end{flushright}
-	\vfill
-	\centerline{\@koht{} \the\year}
-	\clearpage
-	\normalsize
+    \end{center}
+    \vspace{8cm}
+    \begin{center}
+        {\LARGE\textbf{\@title}}
+
+        \@paber
+    \end{center}
+    \vspace{2cm}
+    \begin{flushright}
+        \@author \\
+        \@klass \\
+        \iftoggle{mitujuhendajat}{%
+            Juhendajad: \@juhendaja
+        }{%
+            Juhendaja: \@juhendaja
+        }
+    \end{flushright}
+    \vfill
+    \centerline{\@koht{} \the\year}
+    \clearpage
+    \normalsize
 }
 
 %--------------------------------------------------
-%	KINNITUSLEHT
+%   KINNITUSLEHT
 %--------------------------------------------------
 
 \newcommand{\kinnitusleht}{%
     % ei saa kasutada \chapter'it, sest \appendix muutis seda üsna palju
-	\newpage
-	\addcontentsline{toc}{chapter}{Kinnitusleht}
-	\setlength{\topskip}{2.5 cm}
-	\setlength{\vskip}{0 cm}
-	\Large{\textbf{Kinnitusleht}}
+    \newpage
+    \addcontentsline{toc}{chapter}{Kinnitusleht}
+    \setlength{\topskip}{2.5 cm}
+    \setlength{\vskip}{0 cm}
+    \Large{\textbf{Kinnitusleht}}
     \normalsize
-    
-    Kinnitan, et 
+
+    Kinnitan, et
     \begin{itemize}
         \item koostasin uurimistöö iseseisvalt. Kõigile töös kasutatud teiste autorite töödele ja
         andme\-allikatele on viidatud;
         \item olen teadlik, et uurimistööd ei edastata teistele tulu teenimise eesmärgil ega jagata
         tead\-likult plagieerimiseks.
     \end{itemize}
-    
+
     \vspace{1em}
     \dotfill
-    
-    kuupäev / nimi / allkiri 
-    
+
+    kuupäev / nimi / allkiri
+
     \vspace{1.5cm}
-    \noindent Tunnistan uurimistöö kaitsmisvalmiks. 
-    
+    \noindent Tunnistan uurimistöö kaitsmisvalmiks.
+
     \iftoggle{mitujuhendajat}{%
-		Juhendajad  
-		
-		\vspace{1em}
-        \dotfill 
-    
+        Juhendajad
+
+        \vspace{1em}
+        \dotfill
+
         kuupäev / nimi / allkiri
 
-        \dotfill 
-    
+        \dotfill
+
         kuupäev / nimi / allkiri
-	}{%
-		Juhendaja
-		
-		\vspace{1em}
-        \dotfill 
-    
+    }{%
+        Juhendaja
+
+        \vspace{1em}
+        \dotfill
+
         kuupäev / nimi / allkiri
-	}
+    }
     \vfill
     \setlength{\topskip}{0 cm}
 }
