@@ -162,6 +162,13 @@
 % \huge			25pt
 % \Huge			25pt
 
+% faili alguses scrreprt'i option headings=small annab:
+% \chapter kasutab \Large (17pt)
+% \section kasutab \large (14pt)
+% \subsection etc kasutab \normalsize (12pt)
+% Juhendis on määratud ainult see, et \chapter peaks 16pt olema, aga täpselt
+% 16pt ei ole võimalik scrreprt'iga saada, ja 17pt on piisavalt lähedal
+
 \renewcommand{\baselinestretch}{1.5}%   Reavahe on 1,5
 \setlength{\parindent}{0pt}%            Taandridasid pole
 \setlength{\parskip}{12pt}%             Lõiguvahe on 12 pt
@@ -170,28 +177,33 @@
 % Pealkirjade vahed 
 \RedeclareSectionCommand[%
 beforeskip=2.5cm,
-tocbeforeskip=0pt]{chapter}% XXX: kas see on õige fondisuurusega?? peaks 16pt olema
+tocbeforeskip=0pt]{chapter}
 \renewcommand*{\chapterheadendvskip}{\vspace{0em}}
 \RedeclareSectionCommand[
 beforeskip=1pt,
-afterskip=1sp,% peab olema positiivne, et KOMA ei muudaks seda run-in heading'uks
+afterskip=0pt,
+runin=off,
 tocindent=2em]{section}
 \RedeclareSectionCommand[
 beforeskip=1pt,
-afterskip=1sp,
+afterskip=0pt,
+runin=off,
 tocindent=4em]{subsection}
 \RedeclareSectionCommand[
 beforeskip=1pt,
-afterskip=1sp,
+afterskip=0pt,
+runin=off,
 tocindent=6em]{subsubsection}
 \RedeclareSectionCommand[
 beforeskip=1pt,
-afterskip=1sp,
+afterskip=0pt,
+runin=off,
 tocindent=8em]{paragraph}
 \RedeclareSectionCommand[
 beforeskip=1pt,
-afterskip=1sp,
-indent=0pt,% XXX: Miks on see siin, aga mitte teistel pealkirjadel?
+afterskip=0pt,
+runin=off,
+indent=0pt, % kõigil teistel heading'utel on indent 0 by default, aga subparagraph'il mitte
 tocindent=10em]{subparagraph}
 
 % Pealkirjad boldis ja tekstiga sama fondiga
@@ -252,6 +264,7 @@ tocindent=10em]{subparagraph}
 %--------------------------------------------------
 
 \newcommand{\kinnitusleht}{%
+    % ei saa kasutada \chapter'it, sest \appendix muutis seda üsna palju
 	\newpage
 	\addcontentsline{toc}{chapter}{Kinnitusleht}
 	\setlength{\topskip}{2.5 cm}
