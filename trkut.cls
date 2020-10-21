@@ -112,9 +112,6 @@
 
 \RequirePackage{microtype}% Teeb paigutuse paremaks
 
-% Kas lisadel on ülemine ääris 2,5 cm või 5 cm?
-% ^ juhendis pole öeldud, aga kõik juhendi lisad on 2.5cm
-
 % Lisade pealkirjad stiilis "Lisa 2 Teise lisa pealkiri"
 % Vaata https://tex.stackexchange.com/questions/163890
 \let\oldaddchap\addchap
@@ -147,7 +144,13 @@
         \oldchapter{#1}%
         \let\addcontentsline\oldaddcontentsline%
     }
-    \renewcommand*{\chapterheadstartvskip}{\vspace{0pt}}
+}
+
+% doesn't actually reverse all effects of \appendix,
+% just barely enough to be able to use \addchap
+\newcommand*{\appendixend}{
+    \let\chapter\oldchapter
+    \renewcommand*{\chapterformat}{}
 }
 
 % Font size
@@ -264,13 +267,7 @@ tocindent=10em]{subparagraph}
 %--------------------------------------------------
 
 \newcommand{\kinnitusleht}{%
-    % ei saa kasutada \chapter'it, sest \appendix muutis seda üsna palju
-    \newpage
-    \addcontentsline{toc}{chapter}{Kinnitusleht}
-    \setlength{\topskip}{2.5 cm}
-    \setlength{\vskip}{0 cm}
-    \Large{\textbf{Kinnitusleht}}
-    \normalsize
+    \addchap{Kinnitusleht}
 
     Kinnitan, et
     \begin{itemize}
