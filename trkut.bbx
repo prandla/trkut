@@ -41,26 +41,33 @@ references = {Kasutatud materjalid},
 \DeclareBibliographyDriver{article}{%
   \usebibmacro{begentry}%
   \usebibmacro{author+year+title}%
-  \usebibmacro{journal}%
-  \iffieldundef{volume}{}{%
-  	\addcomma\addspace%
-  	\printfield{volume}%
-  	\iffieldundef{number}{}{%
-  		\addspace%
-  		\parentext{\printfield{number}}%
-  	}
-  	\iffieldundef{pages}{}
-  		{\addcomma%
-  		}
-  }
+  %\usebibmacro{journal}%
+  \printfield{journaltitle}%
+  \iffieldundef{volume}{%
+    \iffieldundef{pages}{}{%
+      \addcomma\addspace%
+    }%
+  }{%
+    \addcomma\addspace%
+    \printfield{volume}%
+    \iffieldundef{number}{}{%
+      \addspace%
+      \parentext{\printfield{number}}%
+    }%
+    \iffieldundef{pages}{}{%
+      \addcomma\addspace%
+    }%
+  }%
   \usebibmacro{pages}%
+  \usebibmacro{url+urldate}%
   \usebibmacro{finentry}
 }
 
 \DeclareBibliographyDriver{book}{%
   \usebibmacro{begentry}%
   \usebibmacro{author+year+title}
-  \usebibmacro{publisher+location}%
+  \usebibmacro{publisher+location+pages}%
+  \usebibmacro{url+urldate}%
   \usebibmacro{finentry}
 }
 
@@ -75,13 +82,16 @@ references = {Kasutatud materjalid},
   \usebibmacro{begentry}%
   \usebibmacro{author+year+title}
   \usebibmacro{url+urldate}%
+  \usebibmacro{addendum}%
   \usebibmacro{finentry}
 }
 
 \DeclareBibliographyDriver{misc}{%
   \usebibmacro{begentry}%
   \usebibmacro{author+year+title}
+  \usebibmacro{publisher+location+pages}%
   \usebibmacro{url+urldate}%
+  \usebibmacro{addendum}%
   \usebibmacro{finentry}
 }
 
@@ -92,35 +102,59 @@ references = {Kasutatud materjalid},
     \printnames{author}%
     \adddot%
   }%
-  \iffieldundef{year}{%
-    \addspace%
+  \iffieldundef{month}{%
+    \iffieldundef{year}{%
+      \addspace%
+    }{%
+      \addspace%
+      (%
+      \printfield{year}%
+      )%
+      \setunit{\addspace}%
+    }%
   }{%
+    % XXX: see kasutab alati numbritega kuupäevi, kuigi juhendis kasutatakse
+    % mõndade allikaliikide jaoks ka sõnadega kuupäevi
     \addspace%
     (%
-    \printfield{year}%
+    \forcezerosmdt{\thefield{day}}.\forcezerosmdt{\thefield{month}}.\thefield{year}%
     )%
     \setunit{\addspace}%
   }%
   %\setunit{\labelnamepunct}\newblock
-  \ifnameundef{author}{%
-  	\setunit{\adddot\addspace}%
-  }{%
+  \ifnameundef{author}{}{%
     \printfield{title}%
+    \iffieldundef{howpublished}{}{%
+      \addspace%
+      \printfield{howpublished}%
+    }%
     \setunit{\adddot\addspace}%
   }%
 }
 
-\newbibmacro*{publisher+location}{%
+\newbibmacro*{publisher+location+pages}{%
   \printlist{location}%
   \iflistundef{publisher}
     {\setunit*{\addcomma\space}}
     {\setunit*{\addcolon\space}}%
   \printlist{publisher}%
-  \newunit}
+  \iffieldundef{pages}{}{%
+    \setunit*{\addcomma\space}%
+    \printfield{pages}%
+  }
+  \newunit%
+}
 
 \newbibmacro*{pages}{%
   \printfield{pages}%
   \newunit%
+}
+
+\newbibmacro*{addendum}{
+  \iffieldundef{addendum}{}{%
+    \printfield{addendum}%
+    \adddot%
+  }%
 }
 
 \renewbibmacro*{url+urldate}{%
@@ -138,7 +172,9 @@ references = {Kasutatud materjalid},
 
 % Jutumärke ega muud eristust ei ole pealkirjadel
 \DeclareFieldFormat{title}{#1}
-\DeclareFieldFormat[article]{title}{\enquote*{#1}}
+\DeclareFieldFormat[article]{title}{#1}
+\DeclareFieldFormat[unpublished]{title}{#1}
+%\DeclareFieldFormat[article]{title}{\enquote*{#1}}
 % Leheküljenumbrid
 \DeclareFieldFormat{pages}{lk #1}
 % Väljaanne
@@ -147,5 +183,7 @@ references = {Kasutatud materjalid},
 \DeclareFieldFormat{url}{Loetud\addcolon\space\url{#1}}
 % Ajakiri pole kaldkirjas
 \DeclareFieldFormat{journaltitle}{#1\isdot}
+\DeclareFieldFormat{howpublished}{[#1]}
+\DeclareFieldFormat{organization}{#1}
 
 \endinput
