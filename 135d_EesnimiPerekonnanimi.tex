@@ -198,10 +198,20 @@ SI ühikute ja arvude vormistamiseks on see soovitatav. Tagab ühtse stiili igal
 Alusfail töötab \verb!biblatex! pakiga. See koostab automaatselt viited ja kasutatud materjalide loetelu. Kõik materjalid, millele viidatakse peavad olema kirjas \verb!.bib! failis.
 
 \section{Viited}
-Tekstisiseseid viiteis saab luua käsuga \verb!\cite{}!. Praegu pole see korrektselt vormistatud, aga selle pärast pole vaja praegu muretseda. \cite{palma15}
+Tekstisiseseid viiteis saab luua käsuga \verb!\parencite{}!. Praegu pole see korrektselt vormistatud, aga selle pärast pole vaja praegu muretseda. \parencite{palma15}
 
 \section{Kasutatud materjalid}
-Kasutatud materjalide loetelu koostatakse viidete alusel käsuga \verb!\printbibliography!. Kui on soov testida kasutatud materjale isegi kui neile pole viidatud, siis võib kasutada käsku \verb!\nocite{*}! kõikide materjalide või \verb!\nocite{}! üksiku materjali jaoks. \cite{palma15}[1-5]
+Kasutatud materjalide loetelu koostatakse viidete alusel käsuga \verb!\printbibliography!. Kui on soov testida kasutatud materjale isegi kui neile pole viidatud, siis võib kasutada käsku \verb!\nocite{*}! kõikide materjalide või \verb!\nocite{}! üksiku materjali jaoks. \parencite[1--5]{palma15}
+
+Erinevate viitamisstiilide näidised: \parencite[333]{test0}
+
+\parencite{test12a} \parencite{test12b}
+
+\parencite{test9}
+
+\parencite[27]{test3}
+
+\parencite{test11}
 
 \addchap{Kokkuvõte}
 
@@ -225,7 +235,6 @@ Kokkuvõttes sõnastatakse eesmärgi täitmine ja antakse vastus sissejuhatuses 
 Töö lõppu lisatakse eesti- ja ingliskeelne resümee, mille koostamist õpetatakse vastavalt eesti keele ja inglise keele tunnis. Nii eesti- kui ingliskeelne resümee algavad uurimistöö pealkirjaga ning resümeede pikkus ei ületa ühte lehekülge. Ingliskeelne resümee (Abstract) peab sisaldama ingliskeelset töö pealkirja.
 
 \addchap{Abstract}
-
 This will contain the English translation of the \enquote{Resümee} section.
 
 \kinnitusleht

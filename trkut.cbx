@@ -2,11 +2,18 @@
 % https://github.com/plk/biblatex/blob/dev/tex/latex/biblatex/cbx/authoryear-ibid.cbx
 \ProvidesFile{trkut.cbx}
 
+% TODO: referencing encyclopedias with s.v.
+% TODO: make sure the formatting for multiple works with same year is correct - it feels ambiguous
+% TODO: citing authorless web pages shouldn't show year
+% TODO: citing emails
+% TODO: multiple authors with same surname shouldn't disambiguate by first letter of first name
+
 \ExecuteBibliographyOptions{labeldateparts,uniquename=init,uniquelist,pagetracker,ibidtracker=constrict,maxcitenames=2,mincitenames=1,autocite=inline}
 
 \providecommand*{\mkibid}[1]{#1}
 \DefineBibliographyStrings{english}{%
-  ibidem = {\textit{Ibid.}}
+  ibidem = {\textit{ibid.}},
+  andothers = {\textit{et al.}},
 }
 
 \newbool{cbx:parens}
