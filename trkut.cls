@@ -134,9 +134,13 @@
     % scrreprt in the same file)
     \newcommand\hackedaddcontentsline[3]{\oldaddcontentsline{#1}{#2}{%
         \chapapp\nobreakspace%
-        \texorpdfstring{\string\def\string\autodot{}%
-        #3%
-        \string\def\string\autodot{.}%
+        % this is needed because the autodot commands don't work in PDF TOC
+        % (it's not necessary in PDF TOC because apparently that one ignores
+        % autodot anyways)
+        \texorpdfstring{%
+            \string\def\string\autodot{}%
+            #3%
+            \string\def\string\autodot{.}%
         }{#3}%
         }}
     \let\oldchapter\chapter
