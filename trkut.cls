@@ -310,7 +310,8 @@ tocindent=10em]{subparagraph}
         kuupäev / nimi / allkiri
     }
     \vfill
-    \setlength{\topskip}{0 cm}
+    %\setlength{\topskip}{0 cm}
+    % i'm not sure why this was even here, especially what with this being the last page of the document, but it somehow causes a blank page to be added to the end when using packages like tikz, so i'm removing it
 }
 
 %---------------------------------------------
