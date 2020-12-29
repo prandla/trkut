@@ -22,7 +22,7 @@
 \RequirePackage{csquotes}% Eesti jutumärgid käsuga \enquote{}
 \RequirePackage{graphicx}% Joonised
 \RequirePackage[colorlinks,citecolor=black,filecolor=black,linkcolor=black,urlcolor=black,bookmarksnumbered]{hyperref}% Sisukorras ja viidetel on lingid
-\RequirePackage{amsmath}
+\RequirePackage[fleqn]{amsmath}% Joondame valemid vasakule
 \RequirePackage{siunitx}
 
 %---------------------------------------------
