@@ -181,6 +181,7 @@
 \setlength{\parindent}{0pt}%            Taandridasid pole
 \setlength{\parskip}{12pt}%             Lõiguvahe on 12 pt
 \setlength{\topskip}{0pt}%              Ülaääre ja teksti vahel pole vaba ruumi
+\setlength{\mathindent}{0pt}%           Valemid olgu vasaku ääre vastas
 
 % Pealkirjade vahed
 \RedeclareSectionCommand[%
