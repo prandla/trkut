@@ -4,7 +4,6 @@
 
 % TODO: make sure the formatting for multiple works with same year is correct - it feels ambiguous
 % TODO: citing authorless web pages shouldn't show year
-% TODO: citing emails
 % TODO: multiple authors with same surname shouldn't disambiguate by first letter of first name
 
 \ExecuteBibliographyOptions{labeldateparts,uniquename=init,uniquelist,pagetracker,ibidtracker=constrict,maxcitenames=2,mincitenames=1,autocite=inline}
@@ -36,7 +35,17 @@
   \iffieldundef{shorthand}
     {\ifthenelse{\ifciteibid\AND\NOT\iffirstonpage}
        {\usebibmacro{cite:ibid}}%
-       {\StrLeft{\strfield{labeltitle}}{14}[\maybesv]%
+       {\ifentrytype{customa}{%
+        % customa is for the (Name dd.mm.yyyy: lisa n) format
+        \printnames{labelname}
+        \setunit{\nameyeardelim}%
+        % XXX: this is kinda ugly
+        \printtext[bibhyperref]{\forcezerosmdt{\thefield{day}}.\forcezerosmdt{\thefield{month}}.\thefield{year}}%
+        \addcolon\newunit%
+        \printfield{addendum}%
+       }{%
+       % if label title starts with s.v.
+       \StrLeft{\strfield{labeltitle}}{14}[\maybesv]%
         \IfStrEq{\maybesv}{\detokenize{\textit{s.v.}}}
          {\printnames{labelname}
          \setunit{\nameyeardelim}%
@@ -48,7 +57,7 @@
            \setunit{\addspace}}
           {\printnames{labelname}%
            \setunit{\nameyeardelim}}%
-        \usebibmacro{cite:labelyear+extrayear}}}}
+        \usebibmacro{cite:labelyear+extrayear}}}}}
     {\usebibmacro{cite:shorthand}}}
 
 \newbibmacro*{citeyear}{%
