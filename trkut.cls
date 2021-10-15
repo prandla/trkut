@@ -3,8 +3,6 @@
 %%% kaarel.kivisalu@real.edu.ee (kaarel.kivisalu@gmail.com pärast 06.2020)
 %%% Modified by Peeter Aleksander Randla in 2020
 
-% XXX: PDF TOC contains garbage for appendices and doesn't have any numbers
-
 % Mitu juhendajat
 % Automaatne nummerdamine ilma käsuta
 %------------------------------------------------------------------------
