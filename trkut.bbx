@@ -11,7 +11,7 @@
 \setlength\bibhang{0pt}
 
 % Eestikeelsed nimed
-\DefineBibliographyStrings{english}{%
+\DefineBibliographyStrings{estonian}{%
 bibliography = {Kasutatud materjalid},
 references = {Kasutatud materjalid},
 }
@@ -118,7 +118,7 @@ references = {Kasutatud materjalid},
     % mõndade allikaliikide jaoks ka sõnadega kuupäevi
     \addspace%
     (%
-    \forcezerosmdt{\thefield{day}}.\forcezerosmdt{\thefield{month}}.\thefield{year}%
+    \mkbibdateshort{year}{month}{day}%
     )%
     \setunit{\addspace}%
   }%
@@ -162,7 +162,7 @@ references = {Kasutatud materjalid},
 	\printfield{url}%
 	\iffieldundef{urlyear}{}
 		{\addcomma\addspace%
-		\forcezerosmdt{\thefield{urlday}}.\forcezerosmdt{\thefield{urlmonth}}.\thefield{urlyear}%
+                \mkbibdateshort{urlyear}{urlmonth}{urlday}%
 	}
 }
 

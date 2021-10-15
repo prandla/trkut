@@ -39,8 +39,7 @@
         % customa is for the (Name dd.mm.yyyy: lisa n) format
         \printnames{labelname}
         \setunit{\nameyeardelim}%
-        % XXX: this is kinda ugly
-        \printtext[bibhyperref]{\forcezerosmdt{\thefield{day}}.\forcezerosmdt{\thefield{month}}.\thefield{year}}%
+        \printtext[bibhyperref]{\mkbibdateshort{year}{month}{day}}%
         \addcolon\newunit%
         \printfield{addendum}%
        }{%
