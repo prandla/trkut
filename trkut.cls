@@ -222,13 +222,12 @@ tocindent=10em]{subparagraph}
 %---------------------------------------------
 %   TIITELLEHT
 %---------------------------------------------
-\newtoggle{mitujuhendajat}
-\togglefalse{mitujuhendajat}
+\newcounter{numjuhendajad}
 
 \RequirePackage{xparse}
 \NewDocumentCommand{\autor}{m}{\newcommand{\@autor}{#1}\renewcommand{\@author}{#1}}
 \NewDocumentCommand{\pealkiri}{m}{\newcommand{\@pealkiri}{#1}\renewcommand{\@title}{#1}}
-\NewDocumentCommand{\juhendaja}{m}{\newcommand{\@juhendaja}{#1}}
+\NewDocumentCommand{\juhendaja}{m}{\listadd{\juhendajalist}{#1}\stepcounter{numjuhendajad}}
 \NewDocumentCommand{\klass}{m}{\newcommand{\@klass}{#1}}
 \NewDocumentCommand{\koht}{m}{\newcommand{\@koht}{#1}}
 \NewDocumentCommand{\asutus}{m}{\newcommand{\@asutus}{#1}}
@@ -257,11 +256,9 @@ tocindent=10em]{subparagraph}
     \begin{flushright}
         \@author \\
         \@klass \\
-        \iftoggle{mitujuhendajat}{%
-            Juhendajad: \@juhendaja
-        }{%
-            Juhendaja: \@juhendaja
-        }
+        \ifnumgreater{\value{numjuhendajad}}{1}{Juhendajad:}{Juhendaja:} \\
+        \newcommand*{\printjuh}[1]{##1 \\ }
+        \forlistloop{\printjuh}{\juhendajalist}
     \end{flushright}
     \vfill
     \centerline{\@koht{} \the\year}
@@ -292,25 +289,16 @@ tocindent=10em]{subparagraph}
     \vspace{1.5cm}
     \noindent Tunnistan uurimistöö kaitsmisvalmiks.
 
-    \iftoggle{mitujuhendajat}{%
-        Juhendajad
+    \ifnumgreater{\value{numjuhendajad}}{1}{Juhendajad}{Juhendaja}
 
-        \vspace{1em}
-        \dotfill
+    \vspace{1em}
+    \newcommand{\printjuhkl}[1]{\dotfill
 
-        kuupäev / nimi / allkiri
+    kuupäev / nimi / allkiri
 
-        \dotfill
-
-        kuupäev / nimi / allkiri
-    }{%
-        Juhendaja
-
-        \vspace{1em}
-        \dotfill
-
-        kuupäev / nimi / allkiri
     }
+    \forlistloop{\printjuhkl}{\juhendajalist}
+
     \vfill
     %\setlength{\topskip}{0 cm}
     % i'm not sure why this was even here, especially what with this being the last page of the document, but it somehow causes a blank page to be added to the end when using packages like tikz, so i'm removing it
