@@ -216,6 +216,9 @@ tocindent=10em]{subparagraph}
 % Pealkirjad boldis ja tekstiga sama fondiga
 \setkomafont{disposition}{\rmfamily\bfseries}
 
+% lingid sama fondiga, mis tekst
+\urlstyle{same}
+
 %---------------------------------------------
 %   TIITELLEHT
 %---------------------------------------------
