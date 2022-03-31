@@ -3,8 +3,6 @@
 %%% kaarel.kivisalu@real.edu.ee (kaarel.kivisalu@gmail.com pärast 06.2020)
 %%% Modified by Peeter Aleksander Randla in 2020
 
-% Mitu juhendajat
-% Automaatne nummerdamine ilma käsuta
 %------------------------------------------------------------------------
 %   CLASS DEFINITION AND PARAMETERS
 %------------------------------------------------------------------------
@@ -53,16 +51,16 @@
 
 %% Leheküljenumbrid algavad sisukorra teiselt leheküljelt
 \renewcommand\thepage{}
-\newtoggle{nummerdamelehti}
-\togglefalse{nummerdamelehti}
 
-% Käsk nummerdamise alustamiseks
-\newcommand{\nummerdame}{%
-    \iftoggle{nummerdamelehti}{}{%
-        \renewcommand\thepage{\arabic{page}}%
-        \toggletrue{nummerdamelehti}%
-        \thispagestyle{empty}%
-    }
+% this is quite hacky - KOMA has a \AddtoDoHook, which is supposed to be used
+% in situations like this, but i couldn't get it to work - the code inside it
+% does execute, but specifically renewcommand doesn't do anything
+\let\oldaddchap\addchap
+\renewcommand{\addchap}[1]{
+    \oldaddchap{#1}
+    \renewcommand\thepage{\arabic{page}}
+    \thispagestyle{empty}
+    \let\addchap\oldaddchap
 }
 
 %---------------------------------------------
@@ -112,7 +110,6 @@
 
 % Lisade pealkirjad stiilis "Lisa 2 Teise lisa pealkiri"
 % Vaata https://tex.stackexchange.com/questions/163890
-\let\oldaddchap\addchap
 \g@addto@macro\appendix{%
     \renewcommand*{\thechapter}{%
         {\arabic{chapter}}%
