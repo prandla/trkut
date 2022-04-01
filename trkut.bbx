@@ -16,6 +16,10 @@ bibliography = {Kasutatud materjalid},
 references = {Kasutatud materjalid},
 }
 
+% tavaliselt biblatex kasutab \chapter*, mis ei lisa peatükki sisukorda.
+% asendame selle \addchap'iga
+\defbibheading{bibliography}{\addchap{#1}}
+
 % Reavahe 1.15
 \renewcommand*{\bibfont}{\normalfont\normalsize\linespread{1.15}\selectfont}
 
