@@ -50,18 +50,15 @@
 %   NUMMERDAMINE
 %---------------------------------------------
 
-%% Leheküljenumbrid algavad sisukorra teiselt leheküljelt
+%% Leheküljenumbrid algavad sissejuhatuse teiselt leheküljelt
 \renewcommand\thepage{}
 
-% this is quite hacky - KOMA has a \AddtoDoHook, which is supposed to be used
-% in situations like this, but i couldn't get it to work - the code inside it
-% does execute, but specifically renewcommand doesn't do anything
-\let\oldaddchap\addchap
-\renewcommand{\addchap}[1]{
-    \oldaddchap{#1}
-    \renewcommand\thepage{\arabic{page}}
-    \thispagestyle{empty}
-    \let\addchap\oldaddchap
+% after the first \chapter (which should be \addchap{Sissejuhatus}):
+\AddtoOneTimeDoHook{heading/branch/nostar/chapter}{%
+    % re-enable page numbering,
+    \renewcommand{\thepage}{\arabic{page}}%
+    % but don't show the page number for the current (first) page
+    \thispagestyle{empty}%
 }
 
 %---------------------------------------------
