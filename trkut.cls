@@ -20,6 +20,7 @@
 \RequirePackage[colorlinks,citecolor=black,filecolor=black,linkcolor=black,urlcolor=black,bookmarksnumbered]{hyperref}% Sisukorras ja viidetel on lingid
 \RequirePackage[fleqn]{amsmath}% Joondame valemid vasakule
 \RequirePackage{siunitx}
+\RequirePackage[title,titletoc]{appendix}
 
 %---------------------------------------------
 %   ÄÄRISED
@@ -108,49 +109,36 @@
 
 \RequirePackage{microtype}% Teeb paigutuse paremaks
 
-% Lisade pealkirjad stiilis "Lisa 2 Teise lisa pealkiri"
-% Vaata https://tex.stackexchange.com/questions/163890
-\g@addto@macro\appendix{%
-    \renewcommand*{\thechapter}{%
-        {\arabic{chapter}}%
-    }
-    \renewcommand*{\chapterformat}{%
-        {\chapapp\nobreakspace\thechapter\enskip}%
-    }
-    \renewcommand*{\chaptermarkformat}{%
-        {\chapapp\nobreakspace\thechapter\enskip}%
-    }
-    \let\oldaddcontentsline\addcontentsline
-    % \addcontentsline is used by \chapter to write a line to the tocfile.
-    % we override it to first write "appendix", then set \autodot to an
-    % empty string to not add a dot after the appendix number, then reset
-    % \autodot to its original value (which generally depends on which
-    % options you pass to scrreprt but we can hardcode it here as we include
-    % scrreprt in the same file)
-    \newcommand\hackedaddcontentsline[3]{\oldaddcontentsline{#1}{#2}{%
-        \chapapp\nobreakspace%
-        % this is needed because the autodot commands don't work in PDF TOC
-        % (it's not necessary in PDF TOC because apparently that one ignores
-        % autodot anyways)
-        \texorpdfstring{%
-            \string\def\string\autodot{}%
-            #3%
-            \string\def\string\autodot{.}%
-        }{#3}%
-        }}
-    \let\oldchapter\chapter
-    \renewcommand*\chapter[1]{%
-        \let\addcontentsline\hackedaddcontentsline%
-        \oldchapter{#1}%
-        \let\addcontentsline\oldaddcontentsline%
-    }
+% These 2 commands are inserted into the TOC to not add dots after appendix
+% names - i.e. "Lisa 1 Pealkiri" instead of "Lisa 1. Pealkiri". They redefine a
+% KOMA-script internal macro \autodot which usually either prints a dot or not,
+% depending on package options. But since we load the package in this file, we
+% can ignore all that behavior and make it print the dot always.
+\NewDocumentCommand{\appendixtocentry}{}{\renewcommand{\autodot}{}}
+\NewDocumentCommand{\appendixtocentryend}{}{\renewcommand{\autodot}{.}}
+% This overwrites a hyperref internal macro which prints the section number in
+% the PDF table of contents. We make it insert a dot when necessary
+\newcommand{\pdftocdot}{.}
+\renewcommand{\Hy@numberline}[1]{#1\pdftocdot{} }
+
+% we can't use AddToHook{env/appendices/begin} because that executes before
+% \appendices itself, and we need to redefine some macros after it.
+\apptocmd{\appendices}{%
+    % the appendix package uses alphabetic numbering by default,
+    % we need arabic numbering
+    \renewcommand\thechapter{\arabic{chapter}}%
+    % appendix doesn't seem to cooperate with KOMA-script well, so manually
+    % fix the chapter prefix
+    \renewcommand{\chapterformat}{\chapapp\nobreakspace\thechapter\enskip}%
+    \renewcommand{\chaptermarkformat}{\chapapp\nobreakspace\thechapter\enskip}%
+
+    \addtocontents{toc}{\appendixtocentry}%
+    \renewcommand{\pdftocdot}{}%
 }
 
-% doesn't actually reverse all effects of \appendix,
-% just barely enough to be able to use \addchap
-\newcommand*{\appendixend}{
-    \let\chapter\oldchapter
-    \renewcommand*{\chapterformat}{}
+
+\AddToHook{env/appendices/end}{%
+    \addtocontents{toc}{\appendixtocentryend}%
 }
 
 % Font size
