@@ -142,20 +142,19 @@
 % \tiny         6pt
 % \scriptsize   8pt
 % \footnotesize 10pt
-% \small        11pt
+% \small        10.95pt
 % \normalsize   12pt
-% \large        14pt
-% \Large        17pt
-% \LARGE        20pt
-% \huge         25pt
-% \Huge         25pt
+% \large        14.4pt (overriden to 14pt)
+% \Large        17.28pt (overriden to 16pt)
+% \LARGE        20.74pt
+% \huge         24.88pt
+% \Huge         24.88pt
 
-% faili alguses scrreprt'i option headings=small annab:
-% \chapter kasutab \Large (17pt)
-% \section kasutab \large (14pt)
-% \subsection etc kasutab \normalsize (12pt)
-% Juhendis on määratud ainult see, et \chapter peaks 16pt olema, aga täpselt
-% 16pt ei ole võimalik scrreprt'iga saada, ja 17pt on piisavalt lähedal
+% manually fix font sizes that are used by headings
+% these baselineskips (2nd number) are 1.2x font size, though KOMA itself seems
+% to use a more complicated formula
+\renewcommand\large{\@setfontsize\large{14pt}{16.8pt}}
+\renewcommand\Large{\@setfontsize\Large{16pt}{19.2pt}}
 
 \renewcommand{\baselinestretch}{1.5}%   Reavahe on 1,5
 \setlength{\parindent}{0pt}%            Taandridasid pole
