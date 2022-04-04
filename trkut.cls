@@ -106,6 +106,9 @@
 
 \RequirePackage{microtype}% Teeb paigutuse paremaks
 
+% jutumärgid on automaatselt "ilusad"
+\MakeOuterQuote{"}
+
 % These 2 commands are inserted into the TOC to not add dots after appendix
 % names - i.e. "Lisa 1 Pealkiri" instead of "Lisa 1. Pealkiri". They redefine a
 % KOMA-script internal macro \autodot which usually either prints a dot or not,
