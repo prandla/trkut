@@ -21,6 +21,7 @@
 \RequirePackage[fleqn]{amsmath}% Joondame valemid vasakule
 \RequirePackage{siunitx}
 \RequirePackage[title,titletoc]{appendix}
+\RequirePackage{fontspec}
 
 %---------------------------------------------
 %   ÄÄRISED
