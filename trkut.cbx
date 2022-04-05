@@ -2,10 +2,6 @@
 % https://github.com/plk/biblatex/blob/dev/tex/latex/biblatex/cbx/authoryear-ibid.cbx
 \ProvidesFile{trkut.cbx}
 
-% TODO: rework how the hyperlinks work (sometimes we end up in a situation
-% where none of the cite elements are hyperlinked, sometimes there are 2
-% separate hyperlinks to the same place)
-
 \ExecuteBibliographyOptions{labeldateparts,uniquename=false,uniquelist,pagetracker,ibidtracker=constrict,maxcitenames=2,mincitenames=1,autocite=inline}
 
 \providecommand*{\mkibid}[1]{#1}
@@ -47,13 +43,13 @@
        {\usebibmacro{cite:ibid}}%
        {\ifentrytype{customa}{%
         % customa is for the (Name dd.mm.yyyy: lisa n) format
-        \printnames{labelname}
+        \printtext[bibhyperref]{\printnames{labelname}
         \setunit{\nameyeardelim}%
-        \printtext[bibhyperref]{\mkbibdateshort{year}{month}{day}}%
+        \mkbibdateshort{year}{month}{day}}%
         \addcolon\newunit%
         \printfield{addendum}%
        }{%
-       \ifthenelse{\ifnameundef{labelname}}%
+       \printtext[bibhyperref]{\ifthenelse{\ifnameundef{labelname}}%
           {\usebibmacro{cite:label}%
            \setunit{\addspace}}
           {\printnames{labelname}%
@@ -64,46 +60,8 @@
         \IfStrEq{\maybesv}{\detokenize{\textit{s.v.}}}
          {\addspace%
          \usebibmacro{cite:label}}{}%
-        }}}
+        }}}}
     {\usebibmacro{cite:shorthand}}}
-
-\newbibmacro*{citeyear}{%
-  \global\boolfalse{cbx:loccit}%
-  \iffieldundef{shorthand}
-    {\ifthenelse{\ifciteibid\AND\NOT\iffirstonpage}
-       {\usebibmacro{cite:ibid}}
-       {\iffieldundef{labelyear}
-	  {\usebibmacro{cite:label}}
-	  {\usebibmacro{cite:labelyear+extrayear}}}}
-    {\usebibmacro{cite:shorthand}}}
-
-\newbibmacro*{textcite}{%
-  \global\boolfalse{cbx:loccit}%
-  \ifnameundef{labelname}
-    {\iffieldundef{shorthand}
-       {\usebibmacro{cite:label}%
-	\setunit{%
-	  \global\booltrue{cbx:parens}%
-	  \addspace\bibopenparen}%
-	\ifnumequal{\value{citecount}}{1}
-	  {\usebibmacro{prenote}}
-	  {}%
-	\usebibmacro{cite:labelyear+extrayear}}
-       {\usebibmacro{cite:shorthand}}}
-    {\printnames{labelname}%
-     \setunit{%
-       \global\booltrue{cbx:parens}%
-       \addspace\bibopenparen}%
-     \ifnumequal{\value{citecount}}{1}
-       {\usebibmacro{prenote}}
-       {}%
-     \iffieldundef{shorthand}
-       {\ifthenelse{\ifciteibid\AND\NOT\iffirstonpage}
-          {\usebibmacro{cite:ibid}}
-	  {\iffieldundef{labelyear}
-             {\usebibmacro{cite:label}}
-             {\usebibmacro{cite:labelyear+extrayear}}}}
-       {\usebibmacro{cite:shorthand}}}}
 
 \newbibmacro*{cite:shorthand}{%
   \printtext[bibhyperref]{\printfield{shorthand}}}
@@ -116,42 +74,24 @@
 
 \newbibmacro*{cite:label}{%
   \iffieldundef{label}
-    {\printtext[bibhyperref]{\printfield[citetitle]{labeltitle}}}
-    {\printtext[bibhyperref]{\printfield{label}}}}
+    {\printfield[citetitle]{labeltitle}}
+    {\printfield{label}}}
 
 \newbibmacro*{cite:labelyear+extrayear}{%
   \iffieldundef{labelyear}
     {}
-    {\printtext[bibhyperref]{%
-       \printfield{labelyear}%
-       \printfield{extradate}}}}
+    {\printfield{labelyear}%
+       \printfield{extradate}}}
 
 \newbibmacro*{cite:postnote}{%
   \ifbool{cbx:loccit}
     {}
     {\usebibmacro{postnote}}}
 
-\newbibmacro*{textcite:postnote}{%
-  \ifthenelse{\iffieldundef{postnote}\OR\boolean{cbx:loccit}}
-    {\ifbool{cbx:parens}
-       {\bibcloseparen}
-       {}}
-    {\ifbool{cbx:parens}
-       {\postnotedelim}
-       {\addspace\bibopenparen}%
-     \printfield{postnote}\bibcloseparen}}
-
 \DeclareCiteCommand{\cite}
   {\usebibmacro{prenote}}
   {\usebibmacro{citeindex}%
    \usebibmacro{cite}}
-  {\multicitedelim}
-  {\usebibmacro{cite:postnote}}
-
-\DeclareCiteCommand*{\cite}
-  {\usebibmacro{prenote}}
-  {\usebibmacro{citeindex}%
-   \usebibmacro{citeyear}}
   {\multicitedelim}
   {\usebibmacro{cite:postnote}}
 
@@ -161,45 +101,6 @@
    \usebibmacro{cite}}
   {\multicitedelim}
   {\usebibmacro{cite:postnote}}
-
-\DeclareCiteCommand*{\parencite}[\mkbibparens]
-  {\usebibmacro{prenote}}
-  {\usebibmacro{citeindex}%
-   \usebibmacro{citeyear}}
-  {\multicitedelim}
-  {\usebibmacro{cite:postnote}}
-
-% XXX: should actually delete all of these, i don't think they format correctly anyways
-\DeclareCiteCommand{\footcite}[\mkbibfootnote]
-  {\usebibmacro{prenote}}
-  {\usebibmacro{citeindex}%
-   \usebibmacro{cite}}
-  {\multicitedelim}
-  {\usebibmacro{cite:postnote}}
-
-\DeclareCiteCommand{\footcitetext}[\mkbibfootnotetext]
-  {\usebibmacro{prenote}}
-  {\usebibmacro{citeindex}%
-   \usebibmacro{cite}}
-  {\multicitedelim}
-  {\usebibmacro{cite:postnote}}
-
-\DeclareCiteCommand{\smartcite}[\iffootnote\mkbibparens\mkbibfootnote]
-  {\usebibmacro{prenote}}
-  {\usebibmacro{citeindex}%
-   \usebibmacro{cite}}
-  {\multicitedelim}
-  {\usebibmacro{cite:postnote}}
-
-\DeclareCiteCommand{\textcite}
-  {\boolfalse{cbx:parens}}
-  {\usebibmacro{citeindex}%
-   \usebibmacro{textcite}}
-  {\ifbool{cbx:parens}
-     {\bibcloseparen\global\boolfalse{cbx:parens}}
-     {}%
-   \multicitedelim}
-  {\usebibmacro{textcite:postnote}}
 
 % Leheküljenumbrid
 \DeclareFieldFormat{pages}{lk #1}
@@ -214,33 +115,6 @@
 
 % Leheküljenumbrite ette viidetes ei lisata "p. " vms
 \DeclareFieldFormat{postnote}{#1}
-
-\newbibmacro*{longcite}{%
-  \global\boolfalse{cbx:loccit}%
-  \iffieldundef{shorthand}
-    {\ifthenelse{\ifciteibid\AND\NOT\iffirstonpage}
-       {\usebibmacro{cite:ibid}}
-       {\ifthenelse{\ifnameundef{labelname}\OR\iffieldundef{labelyear}}
-          {\printfield{title}%
-           \setunit{\addspace}}
-          {\printnames{labelname}%
-           \setunit{\nameyeardelim}}%
-        \usebibmacro{cite:labelyear+extrayear}}}
-    {\usebibmacro{cite:shorthand}}}
-
-\DeclareCiteCommand{\longcite}
-  {\usebibmacro{prenote}}
-  {\usebibmacro{citeindex}%
-   \usebibmacro{longcite}}
-  {\multicitedelim}
-  {\usebibmacro{cite:postnote}}
-
-\DeclareCiteCommand{\footcite}[\mkbibfootnote]
-  {\usebibmacro{prenote}}
-  {\usebibmacro{citeindex}%
-   \usebibmacro{longcite}}
-  {\multicitedelim}
-  {\usebibmacro{postnote}}
 
 % vim: syntax=tex
 \endinput
