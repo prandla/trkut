@@ -2,11 +2,11 @@
 % https://github.com/plk/biblatex/blob/dev/tex/latex/biblatex/cbx/authoryear-ibid.cbx
 \ProvidesFile{trkut.cbx}
 
-% TODO: make sure the formatting for multiple works with same year is correct - it feels ambiguous
-% TODO: citing authorless web pages shouldn't show year
-% TODO: multiple authors with same surname shouldn't disambiguate by first letter of first name
+% TODO: rework how the hyperlinks work (sometimes we end up in a situation
+% where none of the cite elements are hyperlinked, sometimes there are 2
+% separate hyperlinks to the same place)
 
-\ExecuteBibliographyOptions{labeldateparts,uniquename=init,uniquelist,pagetracker,ibidtracker=constrict,maxcitenames=2,mincitenames=1,autocite=inline}
+\ExecuteBibliographyOptions{labeldateparts,uniquename=false,uniquelist,pagetracker,ibidtracker=constrict,maxcitenames=2,mincitenames=1,autocite=inline}
 
 \providecommand*{\mkibid}[1]{#1}
 \DefineBibliographyStrings{english}{%
@@ -28,6 +28,16 @@
 }%
 \edef\threefirstwords#1#2{\noexpand\@threefirstwords#1\space\space\space\noexpand\\{#2}}
 
+% don't use urldate as a substitute for date if it is missing
+\DeclareLabeldate{%
+    \field{date}
+    \field{year}
+    \field{eventdate}
+    \field{origdate}
+    %\field{urldate}
+    \literal{}
+}
+
 \usepackage{xstring}
 
 \newbibmacro*{cite}{%
@@ -43,20 +53,18 @@
         \addcolon\newunit%
         \printfield{addendum}%
        }{%
-       % if label title starts with s.v.
-       \StrLeft{\strfield{labeltitle}}{14}[\maybesv]%
-        \IfStrEq{\maybesv}{\detokenize{\textit{s.v.}}}
-         {\printnames{labelname}
-         \setunit{\nameyeardelim}%
-         \printfield{labelyear}%
-         \addspace%
-         \usebibmacro{cite:label}}%
-        {\ifthenelse{\ifnameundef{labelname}\OR\iffieldundef{labelyear}}%
+       \ifthenelse{\ifnameundef{labelname}}%
           {\usebibmacro{cite:label}%
            \setunit{\addspace}}
           {\printnames{labelname}%
            \setunit{\nameyeardelim}}%
-        \usebibmacro{cite:labelyear+extrayear}}}}}
+        \usebibmacro{cite:labelyear+extrayear}%
+        % if label title starts with s.v.
+       \StrLeft{\strfield{labeltitle}}{14}[\maybesv]%
+        \IfStrEq{\maybesv}{\detokenize{\textit{s.v.}}}
+         {\addspace%
+         \usebibmacro{cite:label}}{}%
+        }}}
     {\usebibmacro{cite:shorthand}}}
 
 \newbibmacro*{citeyear}{%
@@ -161,6 +169,7 @@
   {\multicitedelim}
   {\usebibmacro{cite:postnote}}
 
+% XXX: should actually delete all of these, i don't think they format correctly anyways
 \DeclareCiteCommand{\footcite}[\mkbibfootnote]
   {\usebibmacro{prenote}}
   {\usebibmacro{citeindex}%
