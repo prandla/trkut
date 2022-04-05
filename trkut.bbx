@@ -1,8 +1,7 @@
 % See fail on kasutatud materjalide jaoks
 \ProvidesFile{trkut.bbx}
 
-% XXX: check if sorting is correct (needs to be author, in case of no author first word of title)
-\ExecuteBibliographyOptions{language=estonian, sortlocale=en, dateabbrev=false,maxbibnames=99,giveninits=true, sorting=nyt}
+\ExecuteBibliographyOptions{language=auto, sortlocale=auto, dateabbrev=false, maxbibnames=99, giveninits=true, sorting=nty, autolang=hyphen}
 
 \newbibmacro*{begentry}{}
 \newbibmacro*{finentry}{\finentry}
@@ -29,10 +28,24 @@ references = {Kasutatud materjalid},
 % Perekonnanimi, eesnimi
 \DeclareNameAlias{author}{family-given}
 
+% sort names by how they're displayed, i.e. lastname and initials only
+\DeclareSortingNamekeyTemplate{
+    \keypart{
+        \namepart{family}
+    }
+    \keypart{
+        \namepart[inits=true]{given}
+    }
+    \keypart{
+        \namepart{prefix}
+    }
+    \keypart{
+        \namepart{suffix}
+    }
+}
+
 % Kasutatud materjali lõpus pole punkti
 % \renewcommand*\finentrypunct{}
-
-
 
 %% HACK: fix month name capitalization
 \DeclareFieldFormat{month}{
