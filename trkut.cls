@@ -219,7 +219,7 @@ tocindent=10em]{subparagraph}
 \NewDocumentCommand{\paber}{m}{\newcommand{\@paber}{#1}}
 
 % Vaikeväärtused
-\paber{Uurimist\"o\"o}
+\paber{Uurimistöö}
 \asutus{Tallinna Reaalkool}
 \koht{Tallinn}
 
@@ -241,7 +241,7 @@ tocindent=10em]{subparagraph}
     \begin{flushright}
         \@author \\
         \@klass \\
-        \ifnumgreater{\value{numjuhendajad}}{1}{Juhendajad:}{Juhendaja:} \\
+        \ifnumgreater{\value{numjuhendajad}}{1}{Juhendajad:}{Juhendaja:}
         \newcommand*{\printjuh}[1]{##1 \\ }
         \forlistloop{\printjuh}{\juhendajalist}
     \end{flushright}
@@ -258,12 +258,11 @@ tocindent=10em]{subparagraph}
 \newcommand{\kinnitusleht}{%
     \addchap{Kinnitusleht}
 
-    Kinnitan, et
+    Uurimistöö autorina kinnitan, et
     \begin{itemize}
-        \item koostasin uurimistöö iseseisvalt. Kõigile töös kasutatud teiste autorite töödele ja
-        andme\-allikatele on viidatud;
-        \item olen teadlik, et uurimistööd ei edastata teistele tulu teenimise eesmärgil ega jagata
-        tead\-likult plagieerimiseks.
+        \item koostasin uurimistöö iseseisvalt ning kõigile töös kasutatud teiste autorite töödele ja andme\-allikatele on viidatud;
+        \item uurimistöö vastab Tallinna Reaalkooli uurimistöö juhendile;
+        \item olen teadlik, et uurimistööd ei edastata teistele tulu teenimise eesmärgil ega jagata tead\-likult plagieerimiseks.
     \end{itemize}
 
     \vspace{1em}
@@ -272,21 +271,16 @@ tocindent=10em]{subparagraph}
     kuupäev / nimi / allkiri
 
     \vspace{1.5cm}
-    \noindent Tunnistan uurimistöö kaitsmisvalmiks.
+    \noindent Juhendajana kinnitan, et uurimistöö vastab Tallinna Reaalkooli uurimistöö juhendile ja lubatakse kaitsmisele.
 
-    \ifnumgreater{\value{numjuhendajad}}{1}{Juhendajad}{Juhendaja}
+    Juhendaja
 
     \vspace{1em}
-    \newcommand{\printjuhkl}[1]{\dotfill
+    \dotfill
 
     kuupäev / nimi / allkiri
 
-    }
-    \forlistloop{\printjuhkl}{\juhendajalist}
-
     \vfill
-    %\setlength{\topskip}{0 cm}
-    % i'm not sure why this was even here, especially what with this being the last page of the document, but it somehow causes a blank page to be added to the end when using packages like tikz, so i'm removing it
 }
 
 %---------------------------------------------
