@@ -2,15 +2,9 @@
 
 Originaalne autor Sandra Schumann (128c), uuendatud: Kaarel Kivisalu (135a), Peeter Aleksander Randla (137a)
 
-Kasutus (Linux):
+Kasutamiseks on soovituslik Overleaf. Seal tuleb ainult settingutes pdfLaTeX'i asemel LuaLaTeX valida, ja TeX Live versioon võiks olla vähemalt 2020.
 
-```
-lualatex 135d_EesnimiPerenimi.tex
-biber 135d_EesnimiPerenimi
-lualatex 135d_EesnimiPerenimi.tex
-```
-
-Mujal soovitan Overleaf'i kasutada. Seal tuleb ainult settingutes pdfLaTeX'i asemel LuaLaTeX valida, ja TeX Live versioon võiks panna vähemalt 2020.
+Kui tahta oma arvutis kompileerida, siis tuleb ise installida TeX Live või MiKTeX. Kompileerida saab käsuga `latexmk -lualatex 135d_EesnimiPerekonnanimi.tex`.
 
 Asjad, mida UT'd kirjutades tähele panna:
 
