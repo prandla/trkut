@@ -72,6 +72,32 @@
 \setcounter{tocdepth}{99}%                  Näitame kõikide - ka väga madala taseme - jaotuste pealkirju
 \setcounter{secnumdepth}{99}%               Numbreid ka neile
 
+% A somewhat interesting hack to make table of contents squeeze together to fit
+% onto one page if possible.
+% The way baselineskip usually works is that \baselineskip is set by the font,
+% and doesn't have any shrink/stretch. Then \baselinestretch is set by the user,
+% and \baselinestretch\baselineskip (i.e. the product of them) is used as the
+% actual baseline skip. But we want the final value to have some shrink. Since
+% baselinestretch itself is just a number, not a dimension, it can't have a
+% shrink/stretch component. So we need to give the stretch/shrink to
+% baselineskip. Luckily, it seems that TeX doesn't really mind us redefining
+% baselineskip in terms of itself, so we can pretty much reimplement
+% baselinestretch manually (and add the desired shrink component). The downside
+% is that it has to be redone every single time baselineskip changes, which
+% happens each time the font changes. Though it seems that tocline has enough
+% nested groups so that redefining it at the beginning of each toc entry works
+% well enough.
+
+% First, set baselinestretch to 1.0 at the start of TOC
+\BeforeStartingTOC{\renewcommand{\baselinestretch}{1.0}}
+% Then before each TOC entry, set baselineskip itself to 1.5x, with possibility
+% to shrink down to 1.2x
+% (note that this command still needs to be called before each TOC entry, this
+% is done with the RedeclareSectionCommands later)
+\newcommand{\settocblskip}{
+    \setlength{\baselineskip}{1.5\baselineskip minus 0.3\baselineskip}
+}
+
 %---------------------------------------------
 %   TABELID, JOONISED, VÕRRANDID
 %---------------------------------------------
@@ -155,8 +181,7 @@
 % \Huge         24.88pt
 
 % manually fix font sizes that are used by headings
-% these baselineskips (2nd number) are 1.2x font size, though KOMA itself seems
-% to use a more complicated formula
+% these baselineskips (2nd number) are 1.2x font size
 \renewcommand\large{\@setfontsize\large{14pt}{16.8pt}}
 \renewcommand\Large{\@setfontsize\Large{16pt}{19.2pt}}
 
@@ -167,36 +192,23 @@
 \setlength{\mathindent}{0pt}%           Valemid olgu vasaku ääre vastas
 
 % Pealkirjade vahed
-\RedeclareSectionCommand[%
-beforeskip=2.5cm,
-tocbeforeskip=0pt]{chapter}
+\RedeclareSectionCommand[
+    beforeskip=2.5cm,
+    tocbeforeskip=0pt,
+    tocentryformat={\settocblskip}]{chapter}
 \renewcommand*{\chapterheadendvskip}{\vspace{0em}}
-\RedeclareSectionCommand[
-beforeskip=1pt,
-afterskip=0pt,
-runin=off,
-tocindent=2em]{section}
-\RedeclareSectionCommand[
-beforeskip=1pt,
-afterskip=0pt,
-runin=off,
-tocindent=4em]{subsection}
-\RedeclareSectionCommand[
-beforeskip=1pt,
-afterskip=0pt,
-runin=off,
-tocindent=6em]{subsubsection}
-\RedeclareSectionCommand[
-beforeskip=1pt,
-afterskip=0pt,
-runin=off,
-tocindent=8em]{paragraph}
-\RedeclareSectionCommand[
-beforeskip=1pt,
-afterskip=0pt,
-runin=off,
-indent=0pt, % kõigil teistel heading'utel on indent 0 by default, aga subparagraph'il mitte
-tocindent=10em]{subparagraph}
+\RedeclareSectionCommands[
+    beforeskip=1pt,
+    afterskip=0pt,
+    runin=off,
+    tocentryformat={\settocblskip},
+    indent=0pt
+]{section,subsection,subsubsection,paragraph,subparagraph}
+\RedeclareSectionCommand[tocindent=2em]{section}
+\RedeclareSectionCommand[tocindent=4em]{subsection}
+\RedeclareSectionCommand[tocindent=6em]{subsubsection}
+\RedeclareSectionCommand[tocindent=8em]{paragraph}
+\RedeclareSectionCommand[tocindent=10em]{subparagraph}
 
 % Pealkirjad boldis ja tekstiga sama fondiga
 \setkomafont{disposition}{\rmfamily\bfseries}
@@ -211,7 +223,7 @@ tocindent=10em]{subparagraph}
 
 \RequirePackage{xparse}
 \NewDocumentCommand{\autor}{m}{\newcommand{\@autor}{#1}\renewcommand{\@author}{#1}}
-\NewDocumentCommand{\pealkiri}{m}{\newcommand{\@pealkiri}{#1}\renewcommand{\@title}{#1}}
+\NewDocumentCommand{\pealkiri}{m}{\newcommand{\printpealkiri}{#1}\renewcommand{\@title}{#1}}
 \NewDocumentCommand{\juhendaja}{m}{\listadd{\juhendajalist}{#1}\stepcounter{numjuhendajad}}
 \NewDocumentCommand{\klass}{m}{\newcommand{\@klass}{#1}}
 \NewDocumentCommand{\koht}{m}{\newcommand{\@koht}{#1}}
